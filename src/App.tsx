@@ -17,7 +17,7 @@ function App() {
   const [person, setPerson] = useState<Person[]>([]);
   const [addName, setAddName] = useState<string>("");
   const [selectedPerson, setSelectedPerson] = useState<number>(-1);
-  const [price, setPrice] = useState<number>(0);
+  const [price, setPrice] = useState<string>("");
   const [setOfUsers, setSetOfUsers] = useState<Set<string>>(new Set<string>());
   const [feesTipes, setFeesTips] = useState<number>(0);
   const [tax, setTax] = useState<number>(0);
@@ -38,6 +38,7 @@ function App() {
           <Button
             className="ml-2"
             onClick={() => {
+              if(addName === "") return;
               if (setOfUsers.has(addName.toLowerCase())) return;
               setPerson([...person, { name: addName, items: [] }]);
               setSetOfUsers(setOfUsers.add(addName.toLowerCase()));
@@ -87,7 +88,7 @@ function App() {
           <Card className="p-8 m-8 w-full items-center">
             <div className="flex md:flex-row flex-col">
               <Autocomplete
-                label="Select an Person"
+                label="Select a Person"
                 className="max-w-xs mx-auto"
                 selectedKey={selectedPerson}
                 onSelectionChange={(key: Key) =>
@@ -107,17 +108,21 @@ function App() {
                     className="max-w-xs mx-auto"
                     maxRows={1}
                     size="md"
-                    onChange={(e) => setPrice(Number(e.target.value))}
-                    value={price === 0 ? "" : price.toString()}
+                    onChange={(e) => setPrice(e.target.value)}
+                    value={price}
                   />
                   <Button
                     className="ml-2"
                     onClick={() => {
-                      if (price === 0) return;
+                      if (price === "") return;
+                      if (isNaN(parseFloat(price))) {
+                        setPrice("");
+                        return;
+                      }
                       const newPerson = [...person];
-                      newPerson[selectedPerson].items.push(price as number);
+                      newPerson[selectedPerson].items.push(parseFloat(price));
                       setPerson(newPerson);
-                      setPrice(0);
+                      setPrice("");
                     }}
                   >
                     Add Price
@@ -130,12 +135,12 @@ function App() {
         <Card className="p-8 mx-8 mb-8 w-full items-center">
           <div className="flex flex-col sm:flex-row sm:gap-4 my-1 sm:my-0 sm:mb-4 gap-2">
             <Textarea
-              label="Fees/Tips"
-              className="max-w-xs mx-auto"
+              label="Tips/Fees"
+              className="max-w-xs mx-auto h-full"
               maxRows={1}
               size="md"
               onChange={(e) => 
-                setFeesTips(Number(e.target.value))
+                setFeesTips(parseFloat(e.target.value) || 0)
               }
             />
             <Textarea
@@ -144,7 +149,7 @@ function App() {
               maxRows={1}
               size="md"
               onChange={(e) =>
-                setTax(Number(e.target.value))
+                setTax(parseFloat(e.target.value) || 0)
               }
             />
           </div>
@@ -158,7 +163,7 @@ function App() {
               ))}
           </div>
         </Card>
-        <h1 className="text-gray-400 text-sm text-center text-wrap">Made by Anish Sahoo, Zaydaan Jahangir, William Riser</h1>
+        <h1 className="text-gray-400 text-sm text-center text-wrap">Made by Anish Sahoo, Zaydaan Jahangir, William Riser, Rohan Parikh</h1>
       </div>
     </>
   );
