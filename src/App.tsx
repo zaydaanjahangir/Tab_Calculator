@@ -24,7 +24,7 @@ function App() {
 
   return (
     <>
-      <h1 className="text-center font-mono text-4xl mt-4">Tab Calculator</h1>
+      <h1 className="text-center font-mono text-4xl mt-4">Bill Splitter</h1>
       <div className="mx-8 md:mx-32 text-center mt-8 flex flex-col items-center justify-center">
         <div className="flex flex-row">
           <Textarea
