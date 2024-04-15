@@ -34,6 +34,18 @@ function App() {
             size="md"
             onChange={(e) => setAddName(e.target.value)}
             value={addName}
+            onKeyPress={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault();
+                if(addName === "") return;
+                if (setOfUsers.has(addName.toLowerCase())) {
+                  return
+                }
+                setPerson([...person, { name: addName, items: [] }]);
+                setSetOfUsers(setOfUsers.add(addName.trim().toLowerCase()));
+                setAddName("");
+              }
+            }}
           />
           <Button
             className="ml-2"
@@ -110,6 +122,20 @@ function App() {
                     size="md"
                     onChange={(e) => setPrice(e.target.value)}
                     value={price}
+                    onKeyPress={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (price === "") return;
+                        if (isNaN(parseFloat(price))) {
+                          setPrice("");
+                          return;
+                        }
+                        const newPerson = [...person];
+                        newPerson[selectedPerson].items.push(parseFloat(price));
+                        setPerson(newPerson);
+                        setPrice("");
+                      }
+                    }}
                   />
                   <Button
                     className="ml-2"
