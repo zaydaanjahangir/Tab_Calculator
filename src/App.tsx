@@ -163,7 +163,7 @@ function App() {
               ))}
           </div>
         </Card>
-        <h1 className="text-gray-400 text-sm text-center text-wrap">Made by Anish Sahoo, Zaydaan Jahangir, William Riser, Rohan Parikh</h1>
+        <h1 className="text-gray-400 text-sm text-center text-wrap mb-8">Made by Anish Sahoo, Zaydaan Jahangir, William Riser, Rohan Parikh</h1>
       </div>
     </>
   );
